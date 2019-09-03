@@ -4,7 +4,7 @@ const express = require('express')
 const socketio = require('socket.io')
 const Filter = require('bad-words')
 const { generateMessage, generateLocationMessage } = require('./utils/messages')
-const { addUser, removeUser, getUser, getUsersInRoom } = require('./utils/users')
+const { addUser, removeUser, getUser, getUsersInRoom, getAvailableRooms } = require('./utils/users')
 
 const app = express()
 // We create a server outside of the express library (express would do it otherwise)
@@ -17,6 +17,9 @@ const port = process.env.PORT || 3000;
 
 // Serving up static directory:
 app.use(express.static(publicPath))
+
+const numberOfRooms = getAvailableRooms()
+console.log(numberOfRooms)
 
 // Set up the websocket on the server:
 // Print a message to the terminal, when a given client connects:
@@ -52,6 +55,11 @@ io.on('connection', (socket) => {
     })
 
     callback()
+    
+    io.emit(
+      'roomCount',
+      getAvailableRooms()
+    )
   })
 
   // Receiving an event from the client this time:
@@ -94,6 +102,13 @@ io.on('connection', (socket) => {
       generateLocationMessage(user.username, `https://google.com/maps?q=${location.latitude},${location.longitude}`)
     )
     callback()
+  })
+
+  socket.on('pageLoad', () => {
+    io.emit(
+      'roomCount',
+      getAvailableRooms()
+    )
   })
 })
 

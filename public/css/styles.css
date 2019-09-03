@@ -181,3 +181,11 @@ button:disabled {
     font-weight: 300;
     padding: 12px 24px 0 24px;
 }
+
+/* Room selector - login */
+
+.ez {
+ width: 100px;
+ height: 30px;
+ margin: 4px 0 12px 0;
+}

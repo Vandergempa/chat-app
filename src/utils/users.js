@@ -46,7 +46,6 @@ const getUser = (id) => {
   return users.find((user) => {
     return user.id === id
   })
-
 }
 
 const getUsersInRoom = (room) => {
@@ -55,9 +54,19 @@ const getUsersInRoom = (room) => {
   })
 }
 
+const getAvailableRooms = () => {
+  return users.map((user, index) => {
+    return user.room
+  }).filter((room, index, rooms) => {
+    return rooms.indexOf(room) >= index
+  })
+}
+
+console.log(getAvailableRooms())
 module.exports = {
   addUser,
   removeUser,
   getUser,
-  getUsersInRoom
+  getUsersInRoom,
+  getAvailableRooms
 }

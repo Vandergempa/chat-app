@@ -4,7 +4,7 @@
 <head>
   <title>Chat App</title>
   <link rel="icon" href="/img/favicon.png">
-  <link rel="stylesheet" href="/css/styles.min.css">
+  <link rel="stylesheet" href="/css/styles.css">
 </head>
 
 <body>
@@ -14,13 +14,29 @@
       <!-- We would like to redirect the users to the chat page -->
       <form action="/chat.html">
         <label>Display name</label>
-        <input type="text" name="username" placeholder="Display name" required>
-        <label>Room</label>
-        <input type="text" name="room" placeholder="Room" required>
-        <button>Join</button>
+        <input type="text" name="username" placeholder="Display name" required autocomplete="off">
+        <label>Active rooms</label>
+        <div id="rooms"></div>
+        <label>Room name</label>
+        <input type="text" name="room" placeholder="Room" required autocomplete="off">
+        <button>Create</button>
       </form>
     </div>
   </div>
+  <script id="select-template" type="text/html">
+      <!-- This is the syntax for dealing with arrays (opening and closing
+        and everything in between will happen to that array) -->
+  <select class="ez">
+    <option value="" selected disabled hidden>Select room</option>
+    {{#.}}
+    <option value={{.}}>{{.}}</option>
+    {{/.}}
+  </select>
+  </script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/3.0.1/mustache.min.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/js/index.js"></script>
 </body>
 
 </html>
