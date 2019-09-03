@@ -19,6 +19,12 @@ socket.on('roomCount', (roomCount) => {
 
   const selector = document.querySelector('select')
 
+  // If there are no active rooms, show none and disable select element
+  if (selector.childElementCount < 2) {
+    selector.setAttribute('disabled', 'disabled')
+    selector.options[0].textContent = "None"
+  } 
+
   selector.addEventListener('change', (e) => {
     inputField.value = e.target.value
     button.textContent = 'Join'
